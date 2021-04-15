@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install: # Install AWS cli, kubectl (needed for Helm) and Helm
+    commands:
+      - "PYTHON_IMAGE_TAG=$(source ./tags.txt && echo ${Python_Image_Tag})"
+      - "yum install -y awscli python3"
+      - echo "Python Ecr repo is:"  $PYTHON_ECR_REPO  "Image tag is:" $PYTHON_IMAGE_TAG
+  pre_build: # Authenticate with ECR
+    commands:
+      - $(aws ecr get-login --no-include-email --region ${AWS_DEFAULT_REGION})
+  build: # Build Docker image, tag and push
+    commands:
+      - cd ${CODEBUILD_SRC_DIR}/microservices/python-microservice/ &&  docker build -t python-microservice:$PYTHON_IMAGE_TAG .
+      - docker tag python-microservice:$PYTHON_IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$PYTHON_ECR_REPO:$PYTHON_IMAGE_TAG
+  post_build: # Push the Docker image to the ECR
+    commands:
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$PYTHON_ECR_REPO:$PYTHON_IMAGE_TAG
+artifacts:
+  files:
+    - '**/*'
+  name: docker-build-$(date +%Y-%m-%d)

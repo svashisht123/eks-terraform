@@ -1,0 +1,37 @@
+{{ $global := . }}
+{{ range .Values.applications -}}
+{{ $application := . }}
+{{- $tags := $.Files.Get "values-tags.yaml" | fromYaml }}
+{{ $imgname := $application.image.name -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "demo-api-cluster.fullname" $global }}-{{ $application.image.name }}-deployment
+  namespace: {{ $global.Release.Namespace }}
+  labels:
+    app: {{ template "demo-api-cluster.fullname" $global }}-{{ $application.image.name }}
+    chart: "{{ $global.Chart.Name }}-{{ $global.Chart.Version }}"
+    release: "{{ $global.Release.Name }}"   
+spec:
+  replicas: {{ $application.replicas }}
+  selector:
+    matchLabels:
+      app: {{ template "demo-api-cluster.fullname" $global }}-{{ $application.image.name }}
+      chart: "{{ $global.Chart.Name }}-{{ $global.Chart.Version }}"
+      release: "{{ $global.Release.Name }}"
+  template:
+    metadata:
+      labels:
+        app: {{ template "demo-api-cluster.fullname" $global }}-{{ $application.image.name }}
+        chart: "{{ $global.Chart.Name }}-{{ $global.Chart.Version }}"
+        release: "{{ $global.Release.Name }}"      
+    spec:
+      containers:
+	      - name: {{ template "demo-api-cluster.fullname" $global }}-{{ $application.image.name }}
+        image: "{{ $application.image.repository }}/{{ $application.image.name }}:{{ index $tags (printf "%s_image_tag" $application.image.name) }}"
+        imagePullPolicy: {{ $application.image.pullPolicy }}
+        ports:
+        - containerPort: {{ $application.service.port }}
+
+---
+{{ end -}}

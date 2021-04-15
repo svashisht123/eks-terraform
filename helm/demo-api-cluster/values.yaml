@@ -1,0 +1,84 @@
+
+#########################################################
+#              DNS Details                              #
+#########################################################
+fullnameOverride: demorel
+dns:
+  hostname: my-app.mirademo.com
+  certificateARN: arn:aws:acm:eu-west-1:835483671006:certificate/94e78a84-f644-4605-a77a-b910a545f793
+
+applications:
+#########################################################
+#     Values for DB server Containers                   #
+#########################################################
+  dbserver:
+    replicas: 1
+    image: 
+      repository: 835483671006.dkr.ecr.eu-west-1.amazonaws.com/eks
+      name: dynamo
+      type: dynamodb
+      pullPolicy: Always
+    service:
+      port: 8000
+      scheme: http
+      type: ClusterIP 
+
+#########################################################
+#     Values for springboot Containers                  #
+#########################################################
+  springboot:
+    replicas: 1
+    image: 
+      repository: 835483671006.dkr.ecr.eu-west-1.amazonaws.com/eks
+      name: api
+      type: springboot-ms-gateway
+      pullPolicy: Always 
+    service:
+      port: 8080
+      scheme: http 
+      type: ClusterIP
+
+#########################################################
+#     Values for nginx Containers                  #
+#########################################################
+  nginx:
+    replicas: 1
+    image: 
+      repository: 835483671006.dkr.ecr.eu-west-1.amazonaws.com/eks
+      name: webapp
+      type: nginx 
+      pullPolicy: Always 
+    service:
+      port: 80
+      scheme: http 
+      type: NodePort
+
+#########################################################
+#     Values for nodejs Containers                  #
+#########################################################
+  nodejs:
+    replicas: 1
+    image: 
+      repository: 835483671006.dkr.ecr.eu-west-1.amazonaws.com/eks 
+      name: nodejs
+      type: nodejs-backend
+      pullPolicy: Always 
+    service:
+      port: 4000
+      scheme: http 
+      type: ClusterIP
+
+#########################################################
+#     Values for python Containers                  #
+#########################################################
+  python:
+    replicas:
+    image: 
+      repository: 835483671006.dkr.ecr.eu-west-1.amazonaws.com/eks
+      name: python
+      type: python-backend
+      pullPolicy: Always 
+    service:
+      port: 5000
+      scheme: http
+      type: ClusterIP 

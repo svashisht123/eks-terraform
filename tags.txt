@@ -1,0 +1,5 @@
+Api_Image_Tag=v8.0
+Dynamo_Image_Tag=v1.0
+Webapp_Image_Tag=v1.0
+Nodejs_Image_Tag=v1.0
+Python_Image_Tag=v1.0
