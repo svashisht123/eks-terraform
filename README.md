@@ -27,6 +27,8 @@ Following resources have been created:
 > EKS : Deployed on v1.18 , EKS IAM worker node and cluster role created
 > Pipeline: Code build created to push the docker image to ECR. For this, we have buildspec file present at the root of the code repository
 
+![image](https://user-images.githubusercontent.com/62248521/114949594-9f795280-9e51-11eb-9973-e37db3c3ab7c.png)
+
 Code pipeline can also be utilized end to end to deploy it to EKS cluster. 
 
 EKS deployments are done using Helm , the helm code is in a different repo : eks-helm. 
