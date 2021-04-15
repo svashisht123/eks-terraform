@@ -1,0 +1,32 @@
+{
+  "Version": "2012-10-17",
+  "Id": "SSEAndSSLPolicy",
+  "Statement": [
+      {
+          "Sid": "S3Access",
+          "Effect": "Allow",
+          "Action": [
+              "s3:*",
+              "codebuild:StartBuild",
+              "codebuild:BatchGetBuilds"
+          ],
+          "Resource": "*"
+      },
+      {
+        "Sid": "CodeStar",
+        "Effect": "Allow",
+        "Action": [
+            "codestar-connections:CreateConnection",
+            "codestar-connections:DeleteConnection",
+            "codestar-connections:UseConnection",
+            "codestar-connections:GetConnection",
+            "codestar-connections:ListConnections",
+            "codestar-connections:TagResource",
+            "codestar-connections:ListTagsForResource",
+            "codestar-connections:UntagResource"
+        ],
+        "Resource": "*"
+    }
+  ]
+}
+
