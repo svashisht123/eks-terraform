@@ -11,7 +11,7 @@ def my_form_post():
     #user_input = request.form['text']
     user_input = request.form['text']
 
-    cloud_list = ["Oracle,"Google","Microsoft","Amazon","Deloitte"]
+    cloud_list = ["Oracle","Google","Microsoft","Amazon","Deloitte"]
     #user_input = 'We really like the new security features of GooGLe Cloud'
 
     split_user_input = user_input.split(' ')
