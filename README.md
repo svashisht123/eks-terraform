@@ -20,7 +20,11 @@ List of word that need to be replaced:
 
 Solution :
 
-The APIs have been built using Flask and deployed using Elastic Kubernetes Service. Python has been used here. Terraform is used to provision the resources as IaC. 
+URL to access the function :
+
+http://694161c0-dev-demoapicluste-50db-1234729939.eu-west-1.elb.amazonaws.com/
+
+The APIs have been built using Flask and deployed using Elastic Kubernetes Service. Python has been used here. Terraform is used to provision the resources as IaC. URL shared above is the ingress URL for EKS ALB. 
 Following resources have been created:
 
 > VPC : basic network setup, including subnets and Nat gateway
